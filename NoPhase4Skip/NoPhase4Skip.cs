@@ -15,7 +15,7 @@ namespace R2API.Utils
 
 namespace NoPhase4Skip
 {
-    [BepInPlugin("com.Moffein.NoPhase4Skip", "NoPhase4Skip", "1.0.0")]
+    [BepInPlugin("com.Moffein.NoPhase4Skip", "NoPhase4Skip", "1.0.1")]
     public class NoPhase4Skip : BaseUnityPlugin
     {
         private static BodyIndex brotherHurtIndex;
@@ -32,7 +32,7 @@ namespace NoPhase4Skip
         private void SpellBaseState_OnExit(On.EntityStates.BrotherMonster.SpellBaseState.orig_OnExit orig, EntityStates.BrotherMonster.SpellBaseState self)
         {
             Phase4ImmuneComponent p4 = self.GetComponent<Phase4ImmuneComponent>();
-            if (p4) Destroy(p4);
+            if (p4 && p4.spawnImmuneDuration > 0.1f) p4.spawnImmuneDuration = 0.1f; //Add a tiny delay just in case
 
             orig(self);
         }
